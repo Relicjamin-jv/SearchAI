@@ -1,0 +1,13 @@
+Ar Ti 118 Ze 75 Si 140
+Ze Ar 75 Or 71
+Si Ar 140 Ri 80 Fa 99 Or 151
+Ti Ar 118 Lu 111
+Or Ze 71 Si 151
+Ri Si 80 Pi 97 Cr 146 
+Fa Si 99 Bu 211 
+Lu Ti 111 Me 70
+Pi Ri 97 Cr 138 Bu 101
+Cr Dr 120 Pi 138 Ri 146
+Me Dr 75 Lu 70
+Dr Me 75 Cr 120
+Bu Gi 90 Pi 101 Fa 211
