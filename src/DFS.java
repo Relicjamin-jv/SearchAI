@@ -7,7 +7,7 @@ public class DFS {
 
     //Constructor
     DFS(ArrayList<Main.Node> graph){
-        this.graph = new ArrayList<>(graph);
+        this.graph = graph; //copying the same node reference
     }
 
     public String runDFS(){

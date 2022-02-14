@@ -6,9 +6,10 @@ import java.util.Queue;
 //Arad to Bucharest
 public class BFS {
     ArrayList<Main.Node> graph; //index 0 should contain the starting node
-    StringBuilder sb= new StringBuilder();
+    StringBuilder sb = new StringBuilder();
+
     BFS(ArrayList<Main.Node> graph){
-        this.graph = new ArrayList<>(graph); //copys the array list
+        this.graph = graph;
     }
 
     public String runBFS(){

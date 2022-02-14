@@ -91,6 +91,8 @@ public class Main {
             this.cost = cost;
         }
 
+        //reset func. to reset the nodes between the use of algorithms.
+
         public void setParent(Node pNode){
             this.parent = pNode;
         }
