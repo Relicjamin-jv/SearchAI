@@ -1,5 +1,4 @@
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.io.File;  // Import the File class
 import java.io.FileNotFoundException;  // Import this class to handle errors
 import java.util.Scanner; // Import the Scanner class to read text files
@@ -28,7 +27,35 @@ public class Main {
                 inputFromFile.clear();
                 nodes.add(node); //adds the node
             lineReader.close();
+        } //all nodes are made at this point with there neighbors, need to read the other file and add the extra data for the straight line distance
+
+        String graphHData = openAndReadFile("src/TextFiles/straightLineDistances.txt"); //grab the file
+        Scanner readerLineFile = new Scanner(graphHData); //have the text file in the scanner
+        ArrayList<String> inputHScores = new ArrayList<>();
+        while(readerLineFile.hasNextLine()){
+            String data = readerLineFile.nextLine();
+            Scanner readerLine = new Scanner(data);
+            while(readerLine.hasNext()){
+                inputHScores.add(readerLine.next());
+            }
         }
+
+//        for(String a: inputHScores){
+//            System.out.println(a);
+//        }
+
+        for(int i = 0; i < inputHScores.size(); i += 2){
+            for(int j = 0; j < nodes.size(); j++){
+                if(nodes.get(j).cityName.equals(inputHScores.get(i))){ //if the odd in the array equal any of the cit name set its h score
+                    nodes.get(j).hScore = Integer.valueOf(inputHScores.get(i + 1));
+                }
+            }
+        }
+
+//        for(Node node: nodes){
+//            System.out.println(node.printHscore());
+//        }
+
         //printing out all the nodes
 //        for(Node node : nodes){
 //            System.out.println(node.toString());
@@ -45,24 +72,24 @@ public class Main {
 
         //run the algors. on the nodes
         //BFS: sends in the Graph and the start node
-        BFS bfs = new BFS(nodes);
-        String returnBFSVal = bfs.runBFS();
-        System.out.println(returnBFSVal);
-
-        //resetting nodes
-        for(Node node: nodes){
-            node.reset();
-        }
-
-        //run DFS
-        DFS dfs = new DFS(nodes);  //need to send a whole another array of nodes, it's referencing the same nodes array
-        String returnDFSVal = dfs.runDFS();
-        System.out.println(returnDFSVal);
-
-        //reset nodes
-        for(Node node: nodes){
-            node.reset();
-        }
+//        BFS bfs = new BFS(nodes);
+//        String returnBFSVal = bfs.runBFS();
+//        System.out.println(returnBFSVal);
+//
+//        //resetting nodes
+//        for(Node node: nodes){
+//            node.reset();
+//        }
+//
+//        //run DFS
+//        DFS dfs = new DFS(nodes);  //need to send a whole another array of nodes, it's referencing the same nodes array
+//        String returnDFSVal = dfs.runDFS();
+//        System.out.println(returnDFSVal);
+//
+//        //reset nodes
+//        for(Node node: nodes){
+//            node.reset();
+//        }
         //run A-Star
 
         //closing
@@ -93,12 +120,14 @@ public class Main {
         public Node parent;
         public int cost = 0;
         public boolean visited;
+        public int hScore = 0;
 
         Node(String cityName, ArrayList<Neighbor> neighbors, Node parent, int cost) {
             this.cityName = cityName;
             this.neighbors = new ArrayList<>(neighbors);
             this.parent = parent;
             this.cost = cost;
+            this.hScore = hScore; //added data from the straightLineDistance.txt
         }
 
         //reset func. to reset the nodes between the use of algorithms.
@@ -106,6 +135,10 @@ public class Main {
             this.parent = null;
             this.cost = 0;
             this.visited = false;
+        }
+
+        public void setHScore(int hScore){
+            this.hScore = hScore;
         }
 
         public void setParent(Node pNode){
@@ -136,6 +169,10 @@ public class Main {
                 }
             }
             return children;
+        }
+
+        public String printHscore(){
+            return this.cityName + ": " + this.hScore;
         }
 
         public String toStringPrint(){
