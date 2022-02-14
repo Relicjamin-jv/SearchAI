@@ -43,17 +43,27 @@ public class Main {
 //            }
 //        }
 
-        //run the algor. on the nodes
+        //run the algors. on the nodes
         //BFS: sends in the Graph and the start node
         BFS bfs = new BFS(nodes);
         String returnBFSVal = bfs.runBFS();
         System.out.println(returnBFSVal);
-        //print out the different paths with their path cost
+
+        //resetting nodes
+        for(Node node: nodes){
+            node.reset();
+        }
+
+        //run DFS
         DFS dfs = new DFS(nodes);  //need to send a whole another array of nodes, it's referencing the same nodes array
         String returnDFSVal = dfs.runDFS();
         System.out.println(returnDFSVal);
-        //DFS: Send in the graph start node is at index 0
 
+        //reset nodes
+        for(Node node: nodes){
+            node.reset();
+        }
+        //run A-Star
 
         //closing
         reader.close();
@@ -92,6 +102,11 @@ public class Main {
         }
 
         //reset func. to reset the nodes between the use of algorithms.
+        public void reset(){
+            this.parent = null;
+            this.cost = 0;
+            this.visited = false;
+        }
 
         public void setParent(Node pNode){
             this.parent = pNode;

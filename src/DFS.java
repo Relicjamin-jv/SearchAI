@@ -60,7 +60,7 @@ public class DFS {
             }
             totalPathCost += path.get(i).cost;
         }
-        sb.append("\nTotal Path Cost: ");
+        sb.append("\nTotal Path Cost for DFS: ");
         sb.append(totalPathCost);
         return sb.toString();
     }

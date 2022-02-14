@@ -53,7 +53,7 @@ public class BFS {
                     sb.append("->");
                 }
             }
-            sb.append("\ntotal path cost: ");
+            sb.append("\nTotal Path Cost for BFS: ");
             sb.append(totalPathCost);
             return sb.toString();
         }
