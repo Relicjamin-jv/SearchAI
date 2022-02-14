@@ -49,6 +49,11 @@ public class Main {
         String returnBFSVal = bfs.runBFS();
         System.out.println(returnBFSVal);
         //print out the different paths with their path cost
+        DFS dfs = new DFS(nodes);  //need to send a whole another array of nodes, it's referencing the same nodes array
+        String returnDFSVal = dfs.runDFS();
+        System.out.println(returnDFSVal);
+        //DFS: Send in the graph start node is at index 0
+
 
         //closing
         reader.close();
@@ -77,6 +82,7 @@ public class Main {
         public ArrayList<Neighbor> neighbors;
         public Node parent;
         public int cost = 0;
+        public boolean visited;
 
         Node(String cityName, ArrayList<Neighbor> neighbors, Node parent, int cost) {
             this.cityName = cityName;
@@ -91,6 +97,10 @@ public class Main {
 
         public void setCost(int cost){
             this.cost = cost;
+        }
+
+        public void setVisited(boolean vistited){
+            this.visited = vistited;
         }
 
         public ArrayList<Node> expand(){
