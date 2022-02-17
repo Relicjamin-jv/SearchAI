@@ -10,16 +10,14 @@ public class DFS {
         this.graph = graph; //copying the same node reference
     }
 
-    public String runDFS() {
+    public void runDFS() {
         for (int i = 0; i < graph.size(); i++) {
             graph.get(i).setVisited(false); //sets all the nodes to not visited
         }
-        String returnVal = DFS(graph.get(0));
-        return returnVal;
-
+        DFS(graph.get(0));
     }
 
-    public String DFS(Main.Node node) {
+    public void DFS(Main.Node node) {
         Main.Node currNode = node;
         node.setVisited(true);
         String returnVal = "";
@@ -33,10 +31,10 @@ public class DFS {
             }
             returnVal = DFSPath(path);
             System.out.print(returnVal);
-            return returnVal;
+            return;
         }
 
-        ArrayList<Main.Node> children = currNode.expand();
+        ArrayList<Main.Node> children = currNode.expandDFS();
         //int index = 0;
         for (Main.Node child : children) {
             //index++;
@@ -45,7 +43,6 @@ public class DFS {
                 DFS(child);
             }
         }
-        return "";
     }
 
     public String DFSPath(ArrayList<Main.Node> path) {

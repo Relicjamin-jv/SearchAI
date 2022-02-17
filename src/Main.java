@@ -52,6 +52,10 @@ public class Main {
             }
         }
 
+//        for(Node node : nodes){
+//            System.out.println(node.toStringPrint());
+//        }
+
 //        for(Node node: nodes){
 //            System.out.println(node.printHscore());
 //        }
@@ -85,18 +89,17 @@ public class Main {
         //run DFS
         System.out.println("DFS:");
         DFS dfs = new DFS(nodes);  //need to send a whole another array of nodes, it's referencing the same nodes array
-        String returnDFSVal = dfs.runDFS();
-        System.out.println(returnDFSVal);
+        dfs.runDFS();
 
         //reset nodes
         for(Node node: nodes){
             node.reset();
         }
         //run A-Star
-        System.out.println("Astar:");
-        AStar aStar = new AStar(nodes);
-        String returnAStarVal = aStar.runAstar();
-        System.out.println(returnAStarVal);
+//        System.out.println("Astar:");
+//        AStar aStar = new AStar(nodes);
+//        String returnAStarVal = aStar.runAstar();
+//        System.out.println(returnAStarVal);
         //closing
         reader.close();
     }
@@ -163,7 +166,7 @@ public class Main {
             this.visited = vistited;
         }
 
-        public ArrayList<Node> expand(){
+        public ArrayList<Node> expandBFS(){
             ArrayList<Node> children = new ArrayList<>();
             //grab the nodes that the neighbors are referencing to
             for(int i = 0; i < this.neighbors.size(); i++){
@@ -174,6 +177,23 @@ public class Main {
                             nodes.get(j).setParent(this); //set the parent
                             nodes.get(j).setCost(cityChild.distance);
                             children.add(nodes.get(j)); //returns the nodes that are children of the current node
+                        }
+                    }
+                }
+            }
+            return children;
+        }
+
+        public ArrayList<Node> expandDFS() {
+            ArrayList<Node> children = new ArrayList<>();
+            //we already have the nodes in the neighbor array of this currNode
+            for(int i = 0; i < neighbors.size(); i++){
+                for(Node node : nodes){
+                    if(neighbors.get(i).cityName.equals((node.cityName))){
+                        if(node.visited == false) {
+                            node.setParent(this);
+                            node.setCost(neighbors.get(i).distance);
+                            children.add(node);
                         }
                     }
                 }

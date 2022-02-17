@@ -44,7 +44,7 @@ public class AStar {
             }
 
             //generate the children and set there cost depending on the parent
-            ArrayList<Main.Node> children = currNode.expand();
+            ArrayList<Main.Node> children = currNode.expandBFS();
             for (Main.Node child : children) {
                 if (closed.contains(child)) { //if it is in the closed loop
                     continue; //jumps to the next iteration
@@ -57,7 +57,7 @@ public class AStar {
 
                 if (open.contains(child)) {
                     if (child.fScore < tempFscore) {
-                        continue;
+                        continue;   //if the new score is not as good go to the next interation
                     }
                 }
 

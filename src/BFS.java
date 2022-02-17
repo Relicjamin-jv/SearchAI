@@ -25,7 +25,7 @@ public class BFS {
                 goalNode = node;
             }else{
                 //expand
-                for(Main.Node child: node.expand()){
+                for(Main.Node child: node.expandBFS()){
                     q.add(child);
                 }
             }
