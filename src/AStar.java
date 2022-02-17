@@ -22,21 +22,22 @@ public class AStar {
         StringBuilder sb = new StringBuilder();
         //Put the start node in the open queue
         open.add(graph.get(0)); //gets the first node of the graph or the "start" node
-        Main.Node goalNode = null;
         while (!open.isEmpty()) {
             //pop the lowest value from the open queue
             Main.Node currNode = open.poll();
-
+            closed.add(currNode);
             //check to see if the node we are at is the goalNode
             if (currNode.cityName.equals("Bu")) {
-                goalNode = currNode;
                 int totalCost = 0;
+                ArrayList<Main.Node> path = new ArrayList<>();
                 while (currNode != null) {
-                    sb.append(currNode.cityName);
-                    sb.append("->");
+//                    sb.append(currNode.cityName);
+//                    sb.append("->");
+                    path.add(0, currNode);
                     totalCost += currNode.cost;
                     currNode = currNode.parent;
                 }
+                sb.append(aStarPath(path));
                 sb.append("\n");
                 sb.append(totalCost);
                 return sb.toString();
@@ -67,6 +68,17 @@ public class AStar {
             }
         }
 
+        return sb.toString();
+    }
+
+    public String aStarPath(ArrayList<Main.Node> path){
+        StringBuilder sb = new StringBuilder();
+        for(Main.Node pathNode: path){
+            sb.append(pathNode.cityName);
+            if(!pathNode.cityName.equals("Bu")){
+                sb.append("->");
+            }
+        }
         return sb.toString();
     }
 

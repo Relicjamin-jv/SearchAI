@@ -32,7 +32,6 @@ public class BFS {
         }
         if(foundState){
             int totalPathCost = 0;
-            System.out.println("Printing out path\n");
             ArrayList<Main.Node> path = new ArrayList<>();
             Main.Node current = goalNode;
             while(current!=null){

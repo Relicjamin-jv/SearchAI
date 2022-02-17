@@ -72,6 +72,7 @@ public class Main {
 
         //run the algors. on the nodes
         //BFS: sends in the Graph and the start node
+        System.out.println("BFS:");
         BFS bfs = new BFS(nodes);
         String returnBFSVal = bfs.runBFS();
         System.out.println(returnBFSVal);
@@ -82,6 +83,7 @@ public class Main {
         }
 
         //run DFS
+        System.out.println("DFS:");
         DFS dfs = new DFS(nodes);  //need to send a whole another array of nodes, it's referencing the same nodes array
         String returnDFSVal = dfs.runDFS();
         System.out.println(returnDFSVal);
@@ -91,6 +93,7 @@ public class Main {
             node.reset();
         }
         //run A-Star
+        System.out.println("Astar:");
         AStar aStar = new AStar(nodes);
         String returnAStarVal = aStar.runAstar();
         System.out.println(returnAStarVal);
