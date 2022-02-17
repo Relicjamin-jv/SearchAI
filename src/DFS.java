@@ -38,8 +38,11 @@ public class DFS {
         }
 
         ArrayList<Main.Node> children = currNode.expand();
+        //int index = 0;
         for(Main.Node child: children){
+            //index++;
             if(child.visited == false){
+                //System.out.println(index + ": " + child.cityName);
                 DFS(child);
             }
         }

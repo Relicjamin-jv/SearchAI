@@ -47,7 +47,7 @@ public class Main {
         for(int i = 0; i < inputHScores.size(); i += 2){
             for(int j = 0; j < nodes.size(); j++){
                 if(nodes.get(j).cityName.equals(inputHScores.get(i))){ //if the odd in the array equal any of the cit name set its h score
-                    nodes.get(j).hScore = Integer.valueOf(inputHScores.get(i + 1));
+                    nodes.get(j).setHScore(Integer.valueOf(inputHScores.get(i + 1)));
                 }
             }
         }
@@ -72,26 +72,28 @@ public class Main {
 
         //run the algors. on the nodes
         //BFS: sends in the Graph and the start node
-//        BFS bfs = new BFS(nodes);
-//        String returnBFSVal = bfs.runBFS();
-//        System.out.println(returnBFSVal);
-//
-//        //resetting nodes
-//        for(Node node: nodes){
-//            node.reset();
-//        }
-//
-//        //run DFS
-//        DFS dfs = new DFS(nodes);  //need to send a whole another array of nodes, it's referencing the same nodes array
-//        String returnDFSVal = dfs.runDFS();
-//        System.out.println(returnDFSVal);
-//
-//        //reset nodes
-//        for(Node node: nodes){
-//            node.reset();
-//        }
-        //run A-Star
+        BFS bfs = new BFS(nodes);
+        String returnBFSVal = bfs.runBFS();
+        System.out.println(returnBFSVal);
 
+        //resetting nodes
+        for(Node node: nodes){
+            node.reset();
+        }
+
+        //run DFS
+        DFS dfs = new DFS(nodes);  //need to send a whole another array of nodes, it's referencing the same nodes array
+        String returnDFSVal = dfs.runDFS();
+        System.out.println(returnDFSVal);
+
+        //reset nodes
+        for(Node node: nodes){
+            node.reset();
+        }
+        //run A-Star
+        AStar aStar = new AStar(nodes);
+        String returnAStarVal = aStar.runAstar();
+        System.out.println(returnAStarVal);
         //closing
         reader.close();
     }
@@ -120,14 +122,15 @@ public class Main {
         public Node parent;
         public int cost = 0;
         public boolean visited;
-        public int hScore = 0;
+        public int hScore;
+        public int gScore;
+        public int fScore;
 
         Node(String cityName, ArrayList<Neighbor> neighbors, Node parent, int cost) {
             this.cityName = cityName;
             this.neighbors = new ArrayList<>(neighbors);
             this.parent = parent;
             this.cost = cost;
-            this.hScore = hScore; //added data from the straightLineDistance.txt
         }
 
         //reset func. to reset the nodes between the use of algorithms.
@@ -135,6 +138,10 @@ public class Main {
             this.parent = null;
             this.cost = 0;
             this.visited = false;
+        }
+
+        public void setGScore(int fGcore){
+            this.gScore = fGcore;
         }
 
         public void setHScore(int hScore){
