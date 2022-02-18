@@ -6,6 +6,7 @@ import java.util.Scanner; // Import the Scanner class to read text files
 
 public class Main {
     public static ArrayList<Node> nodes = new ArrayList<>(); //list of all the nodes I have
+
     public static void main(String[] args) {
         //read in the data from the text files provided for this project
         String graphData = openAndReadFile("src/TextFiles/neighbors.txt");
@@ -21,21 +22,21 @@ public class Main {
             for (int i = 1; i < inputFromFile.size(); i += 2) {
                 neighbors.add(new Neighbor(inputFromFile.get(i), Integer.valueOf(inputFromFile.get(i + 1))));
             }
-                //have all the neighbors now, i must now make the node
-                Node node = new Node(inputFromFile.get(0), neighbors, null, 0);
-                neighbors.clear();
-                inputFromFile.clear();
-                nodes.add(node); //adds the node
+            //have all the neighbors now, i must now make the node
+            Node node = new Node(inputFromFile.get(0), neighbors, null, 0);
+            neighbors.clear();
+            inputFromFile.clear();
+            nodes.add(node); //adds the node
             lineReader.close();
         } //all nodes are made at this point with there neighbors, need to read the other file and add the extra data for the straight line distance
 
         String graphHData = openAndReadFile("src/TextFiles/straightLineDistances.txt"); //grab the file
         Scanner readerLineFile = new Scanner(graphHData); //have the text file in the scanner
         ArrayList<String> inputHScores = new ArrayList<>();
-        while(readerLineFile.hasNextLine()){
+        while (readerLineFile.hasNextLine()) {
             String data = readerLineFile.nextLine();
             Scanner readerLine = new Scanner(data);
-            while(readerLine.hasNext()){
+            while (readerLine.hasNext()) {
                 inputHScores.add(readerLine.next());
             }
         }
@@ -44,9 +45,9 @@ public class Main {
 //            System.out.println(a);
 //        }
 
-        for(int i = 0; i < inputHScores.size(); i += 2){
-            for(int j = 0; j < nodes.size(); j++){
-                if(nodes.get(j).cityName.equals(inputHScores.get(i))){ //if the odd in the array equal any of the cit name set its h score
+        for (int i = 0; i < inputHScores.size(); i += 2) {
+            for (int j = 0; j < nodes.size(); j++) {
+                if (nodes.get(j).cityName.equals(inputHScores.get(i))) { //if the odd in the array equal any of the cit name set its h score
                     nodes.get(j).setHScore(Integer.valueOf(inputHScores.get(i + 1)));
                 }
             }
@@ -85,8 +86,8 @@ public class Main {
         for(Node node: nodes){
             node.reset();
         }
-
-        //run DFS
+//
+//        //run DFS
         System.out.println("DFS:");
         DFS dfs = new DFS(nodes);  //need to send a whole another array of nodes, it's referencing the same nodes array
         dfs.runDFS();
@@ -96,10 +97,10 @@ public class Main {
             node.reset();
         }
         //run A-Star
-//        System.out.println("Astar:");
-//        AStar aStar = new AStar(nodes);
-//        String returnAStarVal = aStar.runAstar();
-//        System.out.println(returnAStarVal);
+        System.out.println("\nAstar:");
+        AStar aStar = new AStar(nodes);
+        String returnAStarVal = aStar.runAstar();
+        System.out.println(returnAStarVal);
         //closing
         reader.close();
     }
@@ -128,9 +129,9 @@ public class Main {
         public Node parent;
         public int cost = 0;
         public boolean visited;
-        public int hScore;
-        public int gScore;
-        public int fScore;
+        public int hScore = 0;
+        public int gScore = 0;
+        public int fScore = 0;
 
         Node(String cityName, ArrayList<Neighbor> neighbors, Node parent, int cost) {
             this.cityName = cityName;
@@ -140,40 +141,40 @@ public class Main {
         }
 
         //reset func. to reset the nodes between the use of algorithms.
-        public void reset(){
+        public void reset() {
             this.parent = null;
             this.cost = 0;
             this.visited = false;
         }
 
-        public void setGScore(int fGcore){
+        public void setGScore(int fGcore) {
             this.gScore = fGcore;
         }
 
-        public void setHScore(int hScore){
+        public void setHScore(int hScore) {
             this.hScore = hScore;
         }
 
-        public void setParent(Node pNode){
+        public void setParent(Node pNode) {
             this.parent = pNode;
         }
 
-        public void setCost(int cost){
+        public void setCost(int cost) {
             this.cost = cost;
         }
 
-        public void setVisited(boolean vistited){
+        public void setVisited(boolean vistited) {
             this.visited = vistited;
         }
 
-        public ArrayList<Node> expandBFS(){
+        public ArrayList<Node> expandBFS() {
             ArrayList<Node> children = new ArrayList<>();
             //grab the nodes that the neighbors are referencing to
-            for(int i = 0; i < this.neighbors.size(); i++){
+            for (int i = 0; i < this.neighbors.size(); i++) {
                 Neighbor cityChild = neighbors.get(i); //grabs neighbor data
-                for(int j = 0; j < nodes.size(); j++) {
-                    if(nodes.get(j).cityName.equals(cityChild.cityName)){
-                        if(nodes.get(j).parent == null && this.parent != nodes.get(j)) { //if the parent node hasn't been expanded yet
+                for (int j = 0; j < nodes.size(); j++) {
+                    if (nodes.get(j).cityName.equals(cityChild.cityName)) {
+                        if (nodes.get(j).parent == null && this.parent != nodes.get(j)) { //if the parent node hasn't been expanded yet
                             nodes.get(j).setParent(this); //set the parent
                             nodes.get(j).setCost(cityChild.distance);
                             children.add(nodes.get(j)); //returns the nodes that are children of the current node
@@ -187,10 +188,10 @@ public class Main {
         public ArrayList<Node> expandDFS() {
             ArrayList<Node> children = new ArrayList<>();
             //we already have the nodes in the neighbor array of this currNode
-            for(int i = 0; i < neighbors.size(); i++){
-                for(Node node : nodes){
-                    if(neighbors.get(i).cityName.equals((node.cityName))){
-                        if(node.visited == false) {
+            for (int i = 0; i < neighbors.size(); i++) {
+                for (Node node : nodes) {
+                    if (neighbors.get(i).cityName.equals((node.cityName))) {
+                        if (node.visited == false) {
                             node.setParent(this);
                             node.setCost(neighbors.get(i).distance);
                             children.add(node);
@@ -201,14 +202,37 @@ public class Main {
             return children;
         }
 
-        public String printHscore(){
+        public ArrayList<Node> expandAStar() {
+            ArrayList<Node> children = new ArrayList<>();
+            //we already have the nodes in the neighbor array of this currNode
+            for (int i = 0; i < neighbors.size(); i++) {
+                for (Node node : nodes) {
+                    if (neighbors.get(i).cityName.equals((node.cityName))) {
+                        if(node.visited == false) {
+                            node.setParent(this);
+                            node.setCost(neighbors.get(i).distance);
+                            node.gScore = neighbors.get(i).distance;
+
+                        }
+                        children.add(node);
+                    }
+                }
+            }
+//            System.out.println("For node: " + this.cityName);
+//            for (Node child : children) {
+//                System.out.println(child.cityName);
+//            }
+            return children;
+        }
+
+        public String printHscore() {
             return this.cityName + ": " + this.hScore;
         }
 
-        public String toStringPrint(){
+        public String toStringPrint() {
             StringBuilder sb = new StringBuilder();
             sb.append(this.cityName + "\n" + "Neighbors:\n");
-            for(int i = 0; i < this.neighbors.size(); i++){
+            for (int i = 0; i < this.neighbors.size(); i++) {
                 sb.append("\t" + neighbors.get(i).cityName + ":" + neighbors.get(i).distance + "\n");
             }
             return sb.toString();

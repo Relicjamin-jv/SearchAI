@@ -26,6 +26,7 @@ public class AStar {
             //pop the lowest value from the open queue
             Main.Node currNode = open.poll();
             closed.add(currNode);
+            currNode.visited = true;
             //check to see if the node we are at is the goalNode
             if (currNode.cityName.equals("Bu")) {
                 int totalCost = 0;
@@ -44,16 +45,17 @@ public class AStar {
             }
 
             //generate the children and set there cost depending on the parent
-            ArrayList<Main.Node> children = currNode.expandBFS();
+            ArrayList<Main.Node> children = currNode.expandAStar();
             for (Main.Node child : children) {
                 if (closed.contains(child)) { //if it is in the closed loop
                     continue; //jumps to the next iteration
                 }
 
-                //generate the fScore for the each child
+                //calculate the new fscore
                 int tempFscore = 0;
-                int tempGscore = child.cost + child.parent.gScore;//adds the cumulative gScore
-                tempFscore = tempGscore + child.hScore; //the f(n)
+                int tempGScore = 0;
+                tempGScore = child.parent.gScore + child.gScore;
+                tempFscore = tempGScore + child.hScore;
 
                 if (open.contains(child)) {
                     if (child.fScore < tempFscore) {
@@ -63,7 +65,6 @@ public class AStar {
 
                 //set the Fscore and Gscore, were using the same reference but it should be fine, were not make a new node each time
                 child.fScore = tempFscore;
-                child.gScore = tempGscore;
                 open.add(child);
             }
         }
